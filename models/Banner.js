@@ -9,7 +9,7 @@ const BannerSchema = new mongoose.Schema({
   link: { type: String, required: true },
   tag_google: { type: String, required: false }, // Código do Google Tag Manager
   tag_active: { type: Boolean, default: true },
-  banner_location: { type: mongoose.Schema.Types.ObjectId, ref: 'BannerLocation', required: true }, // Referência ao local do banner
+  banner_location: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BannerLocation', required: true }], // Referência ao local do banner
 });
 
 export default mongoose.model('Banner', BannerSchema);
