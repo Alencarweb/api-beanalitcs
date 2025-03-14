@@ -39,7 +39,7 @@ router.post('/', upload.fields([{ name: 'imagem_desktop' }, { name: 'imagem_mobi
     const { banner_name, data_start, data_end, link, tag_google, tag_active, banner_location } = req.body;
     const imagem_desktop = req.files.imagem_desktop ? req.files.imagem_desktop[0].location : null;
     const imagem_mobile = req.files.imagem_mobile ? req.files.imagem_mobile[0].location : null;
-
+    
     const banner = new Banner({
       banner_name,
       imagem_desktop,

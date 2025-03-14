@@ -1,5 +1,6 @@
 import express from 'express';
 import BannerLocation from '../models/BannerLocation.js';
+import Banner from '../models/Banner.js';
 import auth from '../middleware/auth.js';
 const router = express.Router();
 
@@ -35,9 +36,11 @@ router.get('/:id', async (req, res) => {
     if (!bannerLocation) {
       return res.status(404).send({ message: 'Local de banner não encontrado' });
     }
-    res.send(bannerLocation);
+
+    const banners = await Banner.find({ banner_location: req.params.id });
+    res.send({ bannerLocation, banners });
   } catch (error) {
-    res.status(500).send({ message: 'Erro ao buscar local de banner', error });
+    res.status(500).send({ message: 'Erro ao buscar local de banner e seus banners', error });
   }
 });
 

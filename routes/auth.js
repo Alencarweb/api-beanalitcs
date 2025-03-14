@@ -2,6 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
+import 'dotenv/config';
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).send({ message: 'Senha incorreta' });
     }
 
-    const token = jwt.sign({ userId: user._id }, '1230978!@7tgbhAsdasd75fFtyfi', { expiresIn: '48h' });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '48h' });
     res.send({token});
   } catch (error) {
     console.error(error); 
@@ -35,9 +36,8 @@ router.post('/validate', (req, res) => {
   }
 
   try {
-    // const decoded = jwt.verify(token, '1230978!@7tgbhAsdasd75fFtyfi');
-    // res.send({ valid: true, decoded });
-    res.status(200);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.status(200).send({ valid: true, decoded });
   } catch (error) {
     res.status(401).send({ valid: false, message: 'Token inválido' });
   }
