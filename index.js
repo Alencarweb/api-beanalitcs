@@ -26,8 +26,8 @@ process.env.TZ = 'America/Sao_Paulo';
 
 const app = express();
 app.use(express.json());
-// app.use(cors());
-app.use(cors(corsOptions));
+app.use(cors());
+// app.use(cors(corsOptions));
 
 mongoose.connect(process.env.mongoURI, {
     useNewUrlParser: true,

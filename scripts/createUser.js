@@ -9,8 +9,8 @@ const createUser = async () => {
     });
 
     const newUser = new User({
-      username: 'admin',
-      password: 'admin235689', 
+      username: 'emdiaes',
+      password: 'EmdiaES#1980#3004#1969#', 
     });
 
     await newUser.save();

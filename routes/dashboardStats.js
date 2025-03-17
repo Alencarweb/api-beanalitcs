@@ -7,8 +7,8 @@ const router = express.Router();
 router.use(auth);
 
 router.get('/access/stats', async (req, res) => {
-  const { startDate, endDate } = req.query;
-
+  const { startDate, endDate, searchTerm } = req.query;
+  const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
   try {
     const stats = await Access.aggregate([
       {
@@ -17,6 +17,7 @@ router.get('/access/stats', async (req, res) => {
             $gte: new Date(startDate),
             $lte: new Date(endDate),
           },
+          url: searchTermArg
         },
       },
       {
@@ -35,14 +36,15 @@ router.get('/access/stats', async (req, res) => {
 });
 
 router.get('/access/statsfull', async (req, res) => {
-  const { startDate, endDate } = req.query;
-
+  const { startDate, endDate, searchTerm } = req.query;
+  const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
   try {
     const statsFull = await Access.find({
       accessedAt: {
         $gte: new Date(startDate),
         $lte: new Date(endDate),
       },
+      url: searchTermArg
     });
 
     res.send(statsFull);
@@ -53,8 +55,8 @@ router.get('/access/statsfull', async (req, res) => {
 });
 
 router.get('/clicks/stats', async (req, res) => {
-  const { startDate, endDate } = req.query;
-
+  const { startDate, endDate, searchTerm } = req.query;
+  const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
   try {
     const stats = await Click.aggregate([
       {
@@ -63,6 +65,7 @@ router.get('/clicks/stats', async (req, res) => {
             $gte: new Date(startDate),
             $lte: new Date(endDate),
           },
+          url: searchTermArg
         },
       },
       {
@@ -81,14 +84,15 @@ router.get('/clicks/stats', async (req, res) => {
 });
 
 router.get('/clicks/statsfull', async (req, res) => {
-  const { startDate, endDate } = req.query;
-
+  const { startDate, endDate, searchTerm } = req.query;
+  const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
   try {
     const statsFull = await Click.find({
       createdAt: {
         $gte: new Date(startDate),
         $lte: new Date(endDate),
       },
+      url: searchTermArg
     });
 
     res.send(statsFull);
