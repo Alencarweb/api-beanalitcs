@@ -2,7 +2,6 @@ import express from 'express';
 import ViewBanner from '../models/ViewBanner.js';
 import Click from '../models/Click.js';
 import auth from '../middleware/auth.js';
-import cors from 'cors';
 
 const router = express.Router();
 
@@ -26,9 +25,10 @@ router.get('/:idBanner',auth, async (req, res,) => {
     }
 });
 
-router.get('/clicks/:url',auth, async (req, res,) => {
+router.get('/clicks/',auth, async (req, res,) => {
+  const { paramUrl } = req.body;
     try {
-      const urlPattern = new RegExp(req.params.url.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+      const urlPattern = new RegExp(paramUrl.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
       const total = await Click.countDocuments({ url: { $regex: urlPattern } });
       res.send({ total });
     } catch (error) {

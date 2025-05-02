@@ -9,7 +9,8 @@ import bannerRoutes  from './routes/banner.js';
 import bannerLocationRoutes  from './routes/bannerLocation.js';
 import dashboardStats  from './routes/dashboardStats.js';
 import authRoutes from './routes/auth.js';
-import viewRoutes from './routes/ViewBanner.js';
+import ViewBanner from './routes/ViewBanner.js';
+import publicRoutes from './routes/publicRoutes.js';
 
 const allowedOrigins = ['http://localhost:5173', 'https://outrodominixxxxo.com'];
 const corsOptions = {
@@ -37,7 +38,8 @@ mongoose.connect(process.env.mongoURI, {
 app.use('/auth', authRoutes);
 app.use('/clicks', clickRoutes);
 app.use('/access', accessRoutes);
-app.use('/view', viewRoutes);
+app.use('/view', ViewBanner);
+app.use('/api/public', publicRoutes);
 // private
 app.use('/banners', bannerRoutes);
 app.use('/locations', bannerLocationRoutes);
