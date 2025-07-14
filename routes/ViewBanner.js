@@ -25,9 +25,10 @@ router.get('/:idBanner',auth, async (req, res,) => {
     }
 });
 
-router.get('/clicks/',auth, async (req, res,) => {
+router.post('/clicks/',auth, async (req, res,) => {
   const { paramUrl } = req.body;
     try {
+      if (!paramUrl) return res.send({ total: '0' });
       const urlPattern = new RegExp(paramUrl.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
       const total = await Click.countDocuments({ url: { $regex: urlPattern } });
       res.send({ total });

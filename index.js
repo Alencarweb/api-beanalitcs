@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import useragent from 'useragent';
 import clickRoutes from './routes/clickRoutes.js';
-import accessRoutes from './routes/accessRoutes.js';
+// import accessRoutes from './routes/accessRoutes.js';
 import 'dotenv/config';
 import bannerRoutes  from './routes/banner.js';
 import bannerLocationRoutes  from './routes/bannerLocation.js';
@@ -37,7 +37,7 @@ mongoose.connect(process.env.mongoURI, {
 // public
 app.use('/auth', authRoutes);
 app.use('/clicks', clickRoutes);
-app.use('/access', accessRoutes);
+// app.use('/access', accessRoutes);
 app.use('/view', ViewBanner);
 app.use('/api/public', publicRoutes);
 // private

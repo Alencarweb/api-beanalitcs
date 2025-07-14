@@ -1,58 +1,59 @@
 import express from 'express';
-import Access from '../models/Access.js';
+// import Access from '../models/Access.js';
 import Click from '../models/Click.js'; 
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
 router.use(auth);
 
-router.get('/access/stats', async (req, res) => {
-  const { startDate, endDate, searchTerm } = req.query;
-  const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
-  try {
-    const stats = await Access.aggregate([
-      {
-        $match: {
-          accessedAt: {
-            $gte: new Date(startDate),
-            $lte: new Date(endDate),
-          },
-          url: searchTermArg
-        },
-      },
-      {
-        $group: {
-          _id: '$url',
-          count: { $sum: 1 },
-        },
-      },
-    ]);
+// router.get('/access/stats', async (req, res) => {
+//   const { startDate, endDate, searchTerm } = req.query;
+//   const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
+//   try {
+//     const stats = await Access.aggregate([
+//       {
+//         $match: {
+//           accessedAt: {
+//             $gte: new Date(startDate),
+//             $lte: new Date(endDate),
+//           },
+//           url: searchTermArg
+//         },
+//       },
+//       {
+//         $group: {
+//           _id: '$url',
+//           count: { $sum: 1 },
+//         },
+//       },
+//     ]);
 
-    res.send(stats);
-  } catch (error) {
-    console.error('Error fetching access stats:', error);
-    res.status(500).send({ message: 'Erro no servidor' });
-  }
-});
+//     res.send(stats);
+//   } catch (error) {
+//     console.error('Error fetching access stats:', error);
+//     res.status(500).send({ message: 'Erro no servidor' });
+//   }
+// });
 
-router.get('/access/statsfull', async (req, res) => {
-  const { startDate, endDate, searchTerm } = req.query;
-  const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
-  try {
-    const statsFull = await Access.find({
-      accessedAt: {
-        $gte: new Date(startDate),
-        $lte: new Date(endDate),
-      },
-      url: searchTermArg
-    });
 
-    res.send(statsFull);
-  } catch (error) {
-    console.error('Error fetching full access stats:', error);
-    res.status(500).send({ message: 'Erro no servidor' });
-  }
-});
+// router.get('/access/statsfull', async (req, res) => {
+//   const { startDate, endDate, searchTerm } = req.query;
+//   const searchTermArg = new RegExp(`.*${searchTerm.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}.*`, 'i');
+//   try {
+//     const statsFull = await Access.find({
+//       accessedAt: {
+//         $gte: new Date(startDate),
+//         $lte: new Date(endDate),
+//       },
+//       url: searchTermArg
+//     });
+
+//     res.send(statsFull);
+//   } catch (error) {
+//     console.error('Error fetching full access stats:', error);
+//     res.status(500).send({ message: 'Erro no servidor' });
+//   }
+// });
 
 router.get('/clicks/stats', async (req, res) => {
   const { startDate, endDate, searchTerm } = req.query;
